@@ -1,0 +1,171 @@
+/* Name:                    Date Created:
+                            Data Modified:
+    Purpose:This script creates a database, customers and orders table, and
+    perform a number of select statments.
+*/
+SYSTEM CLS;
+-- Opening print statement
+
+SELECT 'INFO' AS 'Installation starting!!!';
+SELECT USER() AS 'INSTALLATION USER';
+-- Remove the Database if it is already there
+DROP DATABASE IF EXISTS my_testdb;
+
+/* Create the database after checking making sure it is
+    not already there
+*/
+
+-- The following line is pure standard SQL
+CREATE DATABASE IF NOT EXISTS my_testdb
+-- The following line is unique to MySQL it is optional
+-- If Left out the MySQL database will take the default settings
+-- of the database.
+-- EXPLAIN CHARACTER SET:
+-- EXPLAIN COLLATE:
+CHARACTER SET utf8b4 COLLATE utf8mb4_0900_ai_ci;
+
+-- Let's see if the database is created
+
+SHOW DATABASES;
+SELECT 'LINE 33' AS 'DATABASE CREATION COMPLETED';
+-- Let's enter the database
+USE my_testdb;
+
+-- Let's create same tables
+
+DROP TABLE IF EXISTS vendor;
+CREATE TABLE IF NOT EXISTS vendor (
+    vendorid    VARCHAR(2) NOT NULL,
+    vendorname  VARCHAR(25) NOT NULL,
+    PRIMARY KEY (vendorid)
+);
+
+SELECT 'LINE 46' AS 'Table Created: vendor';
+
+DROP TABLE IF EXISTS category (
+    categoryid VARCHAR(2) NOT NULL,
+    categoryname VARCHAR(25) NOT NULL,
+    PRIMARY KEY (categoryid)
+
+);
+
+SELECT 'LINE 55' AS 'Table Created: category'; 
+
+DROP TABLE IF EXISTS product 
+CREATE TABLE IF NOT EXISTS product(
+    prodcutid       VARCHAR(3) NOT NULL,
+    productname     VARCHAR(25) NOT NULL,
+    productprice    DECIMAL(7,2) NOT NULL,
+    vendorid        VARCHAR(2) NOT NULL,
+    categoryid      VARCHAR(2) NOT NULL,\
+    PRIMARY KEY (productid)
+
+);
+
+SELECT 'LINE 68' AS 'Table Created: product';
+
+DROP TABLE IF NOT EXISTS region;
+CREATE TABLE IF NOT EXISTS region (
+    regionid    VARCHAR(2) NOT NULL,
+    regionname  VARCHAR(25) NOT NULL,
+    PRIMARY KEY (regionid)
+);
+
+SELECT 'LINE 77' AS 'Table Created: region';
+
+DROP TABLE IF EXISTS store;
+CREATE TABLE IF EXISTS store (
+    storeid     VARCHAR(3) NOT NULL,
+    storezip    VARCHAR(5) NOT NULL,
+    regionid    VARCHAR(2) NOT NULL,
+    PRIMARY KEY (storeid)
+
+);
+
+SELECT 'LINE 88' AS 'table Created: store';
+
+DROP TABLE IF EXISTS customer;
+CREATE TABLE IF NOT EXISTS customer(
+    customerid  CHAR(7) NOT NULL,
+    customername VARCGAR(15) NOT NULL,
+    customerzip  CHAR(5) NOT NULL,
+    PRIMARY KEY (customreid)
+);
+
+SELECT 'LINE 98' AS 'Table Created: customer';
+
+DROP TABLE IF EXISTS salestransaction;
+CREATE TABLE IF NOT EXISTS saletransaction (
+        tid VARCHAR(8) NOT NULL,
+        customerid CHAR(7) NOT NULL,
+        storeid VARCHAR(3) Not NULL,
+        tdate DATE NOT NULL,
+        PRIMARY KEY (tid)
+
+);
+
+SELECT 'LINE 110' AS 'Table Created: saletransaction';
+
+DROP TABLE IF EXISTS soldvia;
+CREATE TABLE IF NOT EXISTS soldvia (
+    productid CHAR(3) NOT NULL,
+    tid VARCHAR(8) NOT NULL,
+    noofitems INT NOT NULL,
+    PRIMARY KEY (productid, tid)
+
+);
+
+SELECT 'LINE 121' AS 'Table Created: soldvia';
+-- Add FOREIGN KEYS
+ALTER TABLE soldvia
+ ADD FOREIGN KEY (productid) REFERENCES product(productid),
+ ADD FOREIGN KEY (storeid) REFERENCES store(storeid);
+
+ SELECT 'LINE 128' AS 'Table Created: soldvia';
+
+ ALTER TABLE salestransaction
+    ADD FOREIGN KEY (customerid) REFERENCES customer(customerid),
+    ADD FOREIGN KEY (storeid) REFERENCES customer(customerid),
+    
+    SELECT 'LIME 133' AS 'Foreign key Created: salestransaction';
+    ALTER TABLE store
+     ADD FOREIGN KEY (regionid) REFERENCES region(regionid);
+
+     SELECT 'LINE 137' AS 'Foreign key Created: store';
+
+     ALTER TABLE product
+        ADD FOREIGN KEY (vendorid) REFERENCES vendor(vendorid),
+        ADD FOREIGN KEY (catgoryid) REFERENCES category(categoryid);
+
+    SELECT 'LINE 143' AS 'Foreign key Created: product';
+    -- Insert some values into the tables
+    INSERT INTO vendor VALUES ('PG', 'P|acific Gear');
+    INSERT INTO vendor VALUES ('MK', 'Mountain King');
+
+    SELECT'LINE 145' AS 'INSETED: vendor';
+    INSERT INTO category VALUES ('CP', 'Camping');
+    INSERT INTO category VALUES ('FW', 'Footwear';)
+
+    SELECT 'LINE 149' AS 'INSERTED: category';
+
+    INSERT INTO product VALUES ('1x1', 'Zzz Bag',100,'PG','CP');
+    INSERT INTO product VALUES ('2x2', 'Easy Boot',70,'MK','FW');
+    INSERT INTO product VALUES ('3x3', 'Zzz Bag',15,'MK','FW');
+    INSERT INTO product VALUES ('4x4', 'Zzz Bag',90,'PG','FWs');
+    INSERT INTO product VALUES ('5x5', 'Zzz Bag',150,'MK','CP');
+    INSERT INTO product VALUES ('6x6', 'Zzz Bag',250,'MK','CP');
+
+    SELECT 'LINE 158' AS 'INSERTED': product';
+
+    INSERT INTO region VALUES ('C' 'Chicagoland');
+    INSERT INTO region VALUES ('T' 'Tristate');
+
+    SELECT 'LINE 163' AS 'INSERTED: region';
+
+    INSERT INTO store VALUES ('S1','60600','C');
+    INSERT INTO store VALUES ('S2', '60605','C');
+    INSERT INTO store VALUES ('S3', '35400','T');
+
+    SELECT 'LINE 169' AS 'INSERTED: store';
+
+    

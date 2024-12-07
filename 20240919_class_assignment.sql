@@ -21,7 +21,7 @@ CREATE DATABASE IF NOT EXISTS testdb_20240919
 -- EXPLAIN COLLATE:
 CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
 
--- Let's see if the databse is created
+-- Let's see if the database is created
 SHOW DATABASES;
 SELECT '' AS '###############################';
 
@@ -86,9 +86,6 @@ CREATE TABLE orders(
     PRIMARY KEY (order_id),
     FOREIGN KEY (order_info_id) REFERENCES order_info(order_info_id)
 );
-
-
-
 
 -- Closing print statement
 SELECT '' AS 'Installation Completed, check for errors!!!';

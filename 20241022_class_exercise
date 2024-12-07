@@ -1,0 +1,78 @@
+/* Name:                  Data Created:
+                          Data Modified:
+Purpose:This script creates a database, customer and orders table, and
+performs a number of select statements.
+*/
+SYSTEM CLS;
+-- Opening print statement 
+SELECT 'Line 8' AS 'INSTALLATION SCRIPT STARTING!!!;
+
+SELECT USER() AS 'INSTALLATION USER';
+--Remove the database if it is already thier 
+DROP DATABASE IF EXISTS my_testdb;
+
+/* Create the databasr after checking making area it is
+   not already there
+*/
+
+-- The followung line is pure standard SQL
+CREATE DATABASE IF NOT EXISTS my_testdb
+--The following line is unique to MYSQL it is optional
+--If left out the MYSQL database take the default seetings
+-- of the database.
+-- EXPLAIN CHARACTER SET:
+-- EXPLAIN COLLATE:
+CHARACTER SET utf8mb64 COLLATE utf8mb4_0900_ai_ci;
+
+
+-- Let's see if the database is created 
+
+SHOW DATABASES;
+SELECT 'LINE 31' AS 'DATABASE CREATION COMPLETED';
+
+-- Let's enter the database
+USE my_testdb;
+
+-- Let's create some tables
+DROP TABLE IF EXISTS customers;
+CREATE TABLE IF NOT EXISTS customers(
+   customer_id       INT   AUTO_INCREMENT,
+   first_name        VARCHAR(30),
+   last_name         VARCHAR(30),
+   age               INT,
+   country           VARCHAR(3),
+
+   PRIMARY KEY(customer_id)
+
+);
+
+SELECT 'Line 49' AS 'CREATED TABLE';
+SHOW TABLES;
+
+DROP TABLE IF EXISTS orders;
+CREATE TABLE IF NOT EXISTS orders (
+   order_id    INT AUTO_INCREMENT
+   amount      DECIMAL(7.2),
+   customers   INT,
+
+   PRIMARY KEY(order_id),
+   FOREIGN KEY(customers) REFERENCES customers(customer_id)
+);
+SELECT 'LINE 61' AS 'CREATED TABLE
+SHOW TABLES;
+
+INSERT INTO customers(first_name,last_name,age,country)
+VALUES   ('John','Doe',31,'USA')'
+         ('Robert','Luna',22,'USA')'
+         ('David', 'Robinson',22,'UK')'
+         ('John', 'Reinhardt',25,'UK')'
+         ('Betty','Doe',28,'UAE')'
+         ('Davaante','',22,'JAM')'
+         ('Alexis','   ',31,'CAN');
+
+-- Put in a NULL entry
+INSERT INTO customers(first_name,age,country)
+VALUES  ('Migel,40,'MEX');
+
+SELECT 'Line 71' AS 'Customer DATA ADDED';
+
